@@ -38,4 +38,17 @@ public class Timer extends AnimationTimer {
   public BooleanProperty getTrigger() {
     return trigger;
   }
+
+  public void speedUp() {
+    millis = Math.max(millis - 10,0);
+  }
+
+  public void slowDown() {
+    millis = Math.min(millis + 10, 3000);
+  }
+
+
+  public void reset() {
+    millis = 200;
+  }
 }

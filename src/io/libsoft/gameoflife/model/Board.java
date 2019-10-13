@@ -1,6 +1,7 @@
 package io.libsoft.gameoflife.model;
 
 import java.util.Arrays;
+import java.util.Random;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -10,10 +11,13 @@ public class Board {
   private BooleanProperty[][] currentBoard;
   private boolean[][] updateBoard;
   private int rows, columns;
+  private boolean random = false;
+  private Random rng;
 
   public Board(int rows, int columns) {
     this.rows = rows;
     this.columns = columns;
+    rng = new Random();
     currentBoard = new BooleanProperty[rows][columns];
     updateBoard = new boolean[rows][columns];
     newBoard();
@@ -32,6 +36,9 @@ public class Board {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < columns; j++) {
         updateBoard[i][j] = isAlive(currentBoard[i][j].getValue(), i, j);
+        if(random){
+          updateBoard[i][j] = rng.nextDouble() < .5 || updateBoard[i][j];
+        }
       }
     }
     updateCurrentBoard();
@@ -96,6 +103,9 @@ public class Board {
 
   }
 
+  public void flipRandom(){
+    random = !random;
+  }
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -109,4 +119,5 @@ public class Board {
 
     return sb.toString();
   }
+
 }

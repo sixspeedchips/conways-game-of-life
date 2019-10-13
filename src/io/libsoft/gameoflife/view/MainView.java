@@ -24,10 +24,11 @@ public class MainView extends Application {
   @Override
   public void start(Stage stage) {
     board = new Board(50, 50);
-    timer = new Timer(100);
+    timer = new Timer(200);
     paused = new SimpleBooleanProperty(true);
     setTriggers();
     stage.setScene(createScene(new BoardView(board.getCurrentBoard())));
+    stage.setTitle("Life");
     stage.show();
 
   }
@@ -40,7 +41,7 @@ public class MainView extends Application {
       }
     });
     paused.addListener((observable, oldValue, newValue) -> {
-      if (newValue){
+      if (!newValue){
         timer.start();
       } else {
         timer.stop();
@@ -60,6 +61,18 @@ public class MainView extends Application {
       }
       if (event.getCode().equals(KeyCode.R)){
         board.reset();
+      }
+      if(event.getCode().equals(KeyCode.K)){
+        board.flipRandom();
+      }
+      if(event.getCode().equals(KeyCode.RIGHT)){
+        timer.speedUp();
+      }
+      if(event.getCode().equals(KeyCode.LEFT)){
+        timer.slowDown();
+      }
+      if (event.getCode().equals(KeyCode.DOWN)){
+        timer.reset();
       }
     });
 

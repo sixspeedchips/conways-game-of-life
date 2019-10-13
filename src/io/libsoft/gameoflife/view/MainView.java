@@ -23,7 +23,7 @@ public class MainView extends Application {
 
   @Override
   public void start(Stage stage) {
-    board = new Board(50, 50);
+    board = new Board(100, 100);
     timer = new Timer(200);
     paused = new SimpleBooleanProperty(true);
     setTriggers();
@@ -41,7 +41,7 @@ public class MainView extends Application {
       }
     });
     paused.addListener((observable, oldValue, newValue) -> {
-      if (!newValue){
+      if (!newValue) {
         timer.start();
       } else {
         timer.stop();
@@ -53,25 +53,24 @@ public class MainView extends Application {
   private Scene createScene(Node... nodes) {
     StackPane root = new StackPane(nodes);
 
-
     Scene scene = new Scene(root);
     scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-      if(event.getCode().equals(KeyCode.SPACE)){
+      if (event.getCode().equals(KeyCode.SPACE)) {
         paused.setValue(!paused.getValue());
       }
-      if (event.getCode().equals(KeyCode.R)){
+      if (event.getCode().equals(KeyCode.R)) {
         board.reset();
       }
-      if(event.getCode().equals(KeyCode.K)){
+      if (event.getCode().equals(KeyCode.K)) {
         board.flipRandom();
       }
-      if(event.getCode().equals(KeyCode.RIGHT)){
+      if (event.getCode().equals(KeyCode.RIGHT)) {
         timer.speedUp();
       }
-      if(event.getCode().equals(KeyCode.LEFT)){
+      if (event.getCode().equals(KeyCode.LEFT)) {
         timer.slowDown();
       }
-      if (event.getCode().equals(KeyCode.DOWN)){
+      if (event.getCode().equals(KeyCode.DOWN)) {
         timer.reset();
       }
     });

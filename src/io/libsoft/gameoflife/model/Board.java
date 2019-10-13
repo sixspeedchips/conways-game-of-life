@@ -36,8 +36,8 @@ public class Board {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < columns; j++) {
         updateBoard[i][j] = isAlive(currentBoard[i][j].getValue(), i, j);
-        if(random){
-          updateBoard[i][j] = rng.nextDouble() < .5 || updateBoard[i][j];
+        if (random) {
+          updateBoard[i][j] = rng.nextDouble() < .005 || updateBoard[i][j];
         }
       }
     }
@@ -56,11 +56,12 @@ public class Board {
   private boolean isAlive(boolean alive, int row, int column) {
     int aliveNeighbors = countAliveNeighbors(row, column);
     boolean survival;
-    if (alive){
-      if (aliveNeighbors < 2){
+    if (alive) {
+      if (aliveNeighbors < 2) {
         survival = false;
-      } else
+      } else {
         survival = aliveNeighbors < 4;
+      }
     } else {
       survival = aliveNeighbors == 3;
     }
@@ -72,20 +73,20 @@ public class Board {
 
     // compute directly adjacent
     count += column > 0 && currentBoard[row][column - 1].getValue() ? 1 : 0;
-    count += column < columns-1 && currentBoard[row][column + 1].getValue() ? 1 : 0;
+    count += column < columns - 1 && currentBoard[row][column + 1].getValue() ? 1 : 0;
     count += row > 0 && currentBoard[row - 1][column].getValue() ? 1 : 0;
-    count += row < rows-1 && currentBoard[row + 1][column].getValue() ? 1 : 0;
+    count += row < rows - 1 && currentBoard[row + 1][column].getValue() ? 1 : 0;
 
     // compute diagonals
     count += column > 0 && row > 0 && currentBoard[row - 1][column - 1].getValue() ? 1 : 0;
-    count += column > 0 && row < rows-1  && currentBoard[row + 1][column - 1].getValue() ? 1 : 0;
-    count += column < columns-1 && row > 0  && currentBoard[row - 1][column + 1].getValue() ? 1 : 0;
-    count += column < columns-1 &&  row < rows-1  && currentBoard[row + 1][column + 1].getValue() ? 1 : 0;
+    count += column > 0 && row < rows - 1 && currentBoard[row + 1][column - 1].getValue() ? 1 : 0;
+    count += column < columns - 1 && row > 0 && currentBoard[row - 1][column + 1].getValue() ? 1 : 0;
+    count += column < columns - 1 && row < rows - 1 && currentBoard[row + 1][column + 1].getValue() ? 1 : 0;
 
     return count;
   }
 
-  public void set(int row, int column){
+  public void set(int row, int column) {
     currentBoard[row][column].setValue(true);
   }
 
@@ -103,19 +104,19 @@ public class Board {
 
   }
 
-  public void flipRandom(){
+  public void flipRandom() {
     random = !random;
   }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < columns; j++) {
-        sb.append(" ").append(currentBoard[i][j].getValue() ? 1:0);
+        sb.append(" ").append(currentBoard[i][j].getValue() ? 1 : 0);
       }
       sb.append("\n");
     }
-
 
     return sb.toString();
   }
